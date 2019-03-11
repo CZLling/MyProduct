@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+    <title>jQuery应用</title>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+
+    <style type="text/css">
+        div.ex
+        {
+            background-color:#e5eecc;
+            padding:7px;
+            border:solid 1px #c3c3c3;
+        }
+    </style>
+
+</head>
+<body>
+<div class="ex">
+    <button class="hide" type="button">请点击这里</button>
+    <h4 class="test">h4 class =test This is another heading</h4>
+    <p class="test">p class =test This is a paragraph.</p>
+    <p>p 如果您点击我，我会消失。</p>
+    <p>p 点击我，我会消失。</p>
+    <p id="test">p id =test 点击我哦。</p>
+
+    <!--<script type="text/javascript">-->
+        <!--$(document).ready(function(){-->
+            <!--$(".ex .hide").click(function(){-->
+                <!--$(this).parents(".ex").hide("slow");-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".hide").click(function(){
+                $(this).hide();
+            });
+        });
+    </script>
+
+</div>
+
+<div class="ex">
+    <h3>This is a heading</h3>
+    <p id="id">我爱你</p>
+    <p id="gjk">fgkghjkljh</p>
+    <button type="button" class="czl">请点击这里</button>
+    <button id="hide1" type="button">隐藏</button>
+    <button id="show" type="button">显示</button>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".czl").click(function(){
+                <!--html("")函数，改变HTML内容-->
+                $("h3").html("W3School");
+                $("#gjk").fadeOut("slow");
+                $(this).hide();
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#hide1").click(function(){
+                $("#id").hide();
+            });
+            $("#show").click(function(){
+                $("#id").show();
+            });
+        });
+    </script>
+
+
+</div>
+
+<div class="ex">
+    <button class="hide" type="button">隐藏</button>
+    <p>联系人：张先生<br />
+        北三环中路 100 号<br />
+        北京</p>
+</div>
+
+<h4>美国办事处</h4>
+<div class="ex">
+    <button class="hide" type="button">隐藏</button>
+    <p>联系人：David<br />
+        第五大街 200 号<br />
+        纽约</p>
+</div>
+
+<div class="container">
+<div id="div1" style="height:100px;width:300px;padding:10px;margin:3px;border:1px solid blue;background-color:lightblue;"></div>
+<br>
+<button id="bt2" type="button">显示 div 的尺寸</button>
+<p>width() - 返回元素的宽度。</p>
+<p>height() - 返回元素的高度。</p>
+<script>
+    $(document).ready(function(){
+        $("bt2").click(function(){
+            var txt="";
+            txt+="Width of div: " + $("#div1").width() + "</br>";
+            txt+="Height of div: " + $("#div1").height();
+            $("#div1").html(txt);
+        });
+    });
+</script>
+</div>
+
+<div class="container">
+    <h5 id="test1">请点击下面的按钮，通过 jQuery AJAX 改变这段文本。</h5>
+    <button id="btn1" type="button">获得外部的内容</button>
+
+    <script>
+        $(document).ready(function(){
+            $("#btn1").click(function(){
+                $('#test1').load('demo_test.txt #p1');
+            })
+        })
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#btn1").click(function(){
+                $("#test1").load("demo_test.txt",function(responseTxt,statusTxt,xhr){
+                    if(statusTxt=="success")
+                        alert("外部内容加载成功！");
+                    if(statusTxt=="error")
+                        alert("Error: "+xhr.status+": "+xhr.statusText);
+                });
+            });
+
+            $.post("/Student/getStudent",
+                {
+                    id:110928
+                },
+                function(data){
+                    alert("Data: " + data );
+                });
+        });
+    </script>
+</div>
+
+</body>
+</html>

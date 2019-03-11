@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zhiling.product.dao.StudentDao">
+
+    <select id="getAllStudent" resultMap="studentResultMap">
+        select * from student
+    </select>
+
+
+    <select id="queryStudentById" parameterType="Integer" resultMap="studentResultMap" resultType="com.zhiling.product.model.Student">
+        select * from student where id = #{id}
+    </select>
+
+
+    <select id="selectByIds" resultMap="studentResultMap" parameterType="Map">
+        select * from student
+        <if test="list != null">
+        where id in
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        </if>
+    </select>
+
+    <!-- 定义的resultMap，可以解决类的属性名和数据库列名不一致的问题-->
+   <resultMap type="com.zhiling.product.model.Student" id="studentResultMap">
+        <id property="id" column="id"  />
+        <result property="stuName" column="student_name"  />
+        <result property="stuClassid" column="student_classid"  />
+        <result property="stuScoreid" column="student_scoreid"  />
+        <result property="stuGender" column="student_gender"  />
+        <result property="stuScid" column="student_scid"  />
+        <result property="stuAge" column="student_age"  />
+        <result property="stuAddress" column="student_address"  />
+        <result property="stuTel" column="student_tel"  />
+        <result property="stuCreatetime" column="student_createtime"  />
+        <result property="stuCreateuser" column="student_createuser"  />
+       <result property="status" column="status"  />
+    </resultMap>
+
+
+    <insert id="addStudent" parameterType="com.zhiling.product.model.Student">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="stuName != null" >
+                student_name,
+            </if>
+            <if test="stuClassid != null" >
+                student_classid,
+            </if>
+            <if test="stuScoreid != null" >
+                student_scoreid,
+            </if>
+            <if test="stuGender != null" >
+                student_gender,
+            </if>
+            <!--<if test="stuScid != null" >-->
+                <!--student_scid,-->
+            <!--</if>-->
+            <!--<if test="stuAge != null" >-->
+                <!--student_age,-->
+            <!--</if>-->
+            <!--<if test="stuAddress != null" >-->
+                <!--student_address,-->
+            <!--</if>-->
+            <!--<if test="stuTel != null" >-->
+                <!--student_tel,-->
+            <!--</if>-->
+            <!--<if test="stuCreatetime != null" >-->
+                <!--student_createtime,-->
+            <!--</if>-->
+            <!--<if test="stuCreateuser != null" >-->
+                <!--student_createuser,-->
+            <!--</if>-->
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="stuName != null" >
+                #{stuName,jdbcType=VARCHAR},
+            </if>
+            <if test="stuClassid != null" >
+                #{stuClassid,jdbcType=INTEGER},
+            </if>
+            <if test="stuScoreid != null" >
+                #{stuScoreid,jdbcType=INTEGER},
+            </if>
+            <if test="stuGender != null" >
+                #{stuGender,jdbcType=TINYINT},
+            </if>
+            <!--<if test="stuScid != null" >-->
+                <!--#{stuScid,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="stuAge != null" >-->
+                <!--#{stuAge,jdbcType=INTEGER},-->
+            <!--</if>-->
+            <!--<if test="stuAddress != null" >-->
+                <!--#{stuAddress,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="stuTel != null" >-->
+                <!--#{stuTel,jdbcType=CHAR},-->
+            <!--</if>-->
+            <!--<if test="stuCreatetime != null" >-->
+                <!--#{stuCreatetime,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="stuCreateuser != null" >-->
+                <!--#{stuCreateuser,jdbcType=VARCHAR},-->
+            <!--</if>-->
+        </trim>
+</insert>
+
+
+    <update id="updateStudent" parameterType="com.zhiling.product.model.Student">
+        update student
+        <set>
+            <if test="stuName !=null">
+                student_name=#{stuName},
+        </if>
+            <if test="stuAge !=null">
+                student_age=#{stuAge},
+            </if>
+            <if test="stuAddress !=null">
+                student_address=#{stuAddress},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+
+    <!--逻辑删除-->
+    <delete id="deleteStudent" parameterType="Map" >
+        update student set status = #{status}
+        where id=#{id}
+    </delete>
+
+    <!--物理删除-->
+    <!--<delete id="deleteStudent" parameterType="Integer" >-->
+        <!--delete from student where id=#{id}-->
+    <!--</delete>-->
+
+
+</mapper>
